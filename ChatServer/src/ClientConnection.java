@@ -8,7 +8,6 @@ import java.net.Socket;
 
 public class ClientConnection implements Runnable
 {
-	
 	private Socket socket = null;
 	private PrintWriter out;
 	private BufferedReader in;

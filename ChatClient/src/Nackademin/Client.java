@@ -54,18 +54,26 @@ public class Client {
 	}
 
 	// read a message from the stream coming from the server
-	public String receive() {
-		log("Receiving...");
-
-		String receivedMessage = "";
-		try {
-			receivedMessage = inStream.readLine();
-			log("Message received!");
-		} catch (IOException e) {
-			logError("Receive failed! " + e.getMessage());
-		}
-
-		return receivedMessage;
+	
+	public void receive() {
+		
+		new Thread(new Runnable(){
+		
+			@Override
+			public void run() {
+				while(true){
+					log("Receiving...");
+	
+					String receivedMessage = "";
+					try {
+						receivedMessage = inStream.readLine();
+						log("Message received!");
+					} catch (IOException e) {
+						logError("Receive failed! " + e.getMessage());
+					}
+				}
+			}
+		});
 	}
 	private void log(String message) {
 		System.out.println("Client: " + message);
@@ -73,4 +81,5 @@ public class Client {
 	private void logError(String message) {
 		System.err.println("Client: " + message);
 	}
+	
 }

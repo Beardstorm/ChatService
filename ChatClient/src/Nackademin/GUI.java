@@ -26,12 +26,7 @@ import javax.swing.border.MatteBorder;
 
 public class GUI extends JFrame {
 
-	
-	  
-	  
-	  
-	  
-	  public static void main(String[] args) {
+	  /*public static void main(String[] args) {
 		  EventQueue.invokeLater(new Runnable()
 		  	{ 
 			  public void run() {
@@ -43,7 +38,7 @@ public class GUI extends JFrame {
 				  }
 			  }
 		});
-	  }
+	  }*/
 	 
 	 
 
@@ -61,8 +56,10 @@ public class GUI extends JFrame {
 	private JList<String> list;
 	private TextArea textArea;
 	private JPanel panel;
+	private Client client;
 
-	public GUI() {
+	public GUI(Client client) {
+		this.client = client;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 450, 260);
@@ -153,9 +150,6 @@ public class GUI extends JFrame {
 			}
 		});
 		
-
-
-
 		// Add actions to button
 		
 		txtInputMessage.addKeyListener(
@@ -163,7 +157,8 @@ public class GUI extends JFrame {
 		                public void keyPressed(KeyEvent e){
 		                    if(e.getKeyCode() == KeyEvent.VK_ENTER){
 		                		String input = txtInputMessage.getText().toString();
-		    					textArea.append(input + System.lineSeparator());
+		                		
+		    					//textArea.append(input + System.lineSeparator());
 		    					txtInputMessage.setText(""); 
 		                    }       
 		                }
