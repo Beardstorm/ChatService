@@ -69,16 +69,10 @@ public class Client {
 
 		return receivedMessage;
 	}
-	// Metod för att returnera användarens ID (userID) registreras via GUI
-	public String getUserID() {
-		return userID;
-	}
-
 	private void log(String message) {
-		System.out.println(userID + ": " + message);
+		System.out.println("Client: " + message);
 	}
-
 	private void logError(String message) {
-		System.err.println(userID + ": " + message);
+		System.err.println("Client: " + message);
 	}
 }
