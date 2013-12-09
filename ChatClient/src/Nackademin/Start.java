@@ -7,7 +7,7 @@ public class Start {
 
 		Client client = new Client();
 		try {
-			client.connect("127.0.0.1", 52000);
+			client.connect("127.0.0.1", 52000); // Hårdkodat för tillfället :)
 		} catch (IOException e) {
 			System.err.println("Failed to connect to the server. "
 					+ e.getMessage());

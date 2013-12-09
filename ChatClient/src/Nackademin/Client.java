@@ -69,8 +69,7 @@ public class Client {
 
 		return receivedMessage;
 	}
-
-	
+	// Metod för att returnera användarens ID (userID) registreras via GUI
 	public String getUserID() {
 		return userID;
 	}
