@@ -13,8 +13,6 @@ public class Client {
 	private PrintWriter outStream = null;
 	private BufferedReader inStream = null;
 	
-	private String userID = null;
-
 	// set up a connection to a specified server and port
 	public void connect(String serverAddress, int serverPort)
 			throws IOException {
