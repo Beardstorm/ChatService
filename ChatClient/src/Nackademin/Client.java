@@ -18,7 +18,7 @@ public class Client {
 	// set up a connection to a specified server and port
 	public void connect(String serverAddress, int serverPort)
 			throws IOException {
-		log("Connecting to server...");
+		log("Connecting to the most amazing server ever being made...");
 
 		// Set up a socket and connect it to our server
 		connectionToServer = new Socket(serverAddress, serverPort);
@@ -76,10 +76,10 @@ public class Client {
 	}
 
 	private void log(String message) {
-		System.out.println(userID + ":" + message);
+		System.out.println(userID + ": " + message);
 	}
 
 	private void logError(String message) {
-		System.err.println(userID + ":" + message);
+		System.err.println(userID + ": " + message);
 	}
 }
