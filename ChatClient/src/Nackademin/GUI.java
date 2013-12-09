@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.SystemColor;
+import java.awt.EventQueue;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
@@ -24,18 +26,26 @@ import javax.swing.border.MatteBorder;
 
 public class GUI extends JFrame {
 
-	/**
-	 * 
-	 * ### mainmetod från testprojektet ###
-	 * 
-	 * 
-	 * public static void main(String[] args) throws IOException {
-	 * EventQueue.invokeLater(new Runnable() { public void run() { try { GUI
-	 * frame = new GUI(); frame.setVisible(true); } catch (Exception e) {
-	 * e.printStackTrace(); } } });
-	 * 
-	 * 
-	 */
+	
+	  
+	  
+	  
+	  
+	  public static void main(String[] args) {
+		  EventQueue.invokeLater(new Runnable()
+		  	{ 
+			  public void run() {
+				  try {
+					  GUI frame = new GUI();
+					  frame.setVisible(true);
+				  } catch (Exception e) {
+					  e.printStackTrace();
+				  }
+			  }
+		});
+	  }
+	 
+	 
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
