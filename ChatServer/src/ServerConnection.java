@@ -6,18 +6,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientConnection implements Runnable
+public class ServerConnection implements Runnable
 {
 	
 	private Socket socket = null;
 	private PrintWriter out;
 	private BufferedReader in;
-	public String username;
-	public boolean hasNewMessage = false;
-	private String receivedMessage;
 	 
 	// create with a socket
-    public ClientConnection(Socket socket){
+    public ServerConnection(Socket socket){
         this.socket = socket;
     }
     
@@ -28,32 +25,27 @@ public class ClientConnection implements Runnable
 	}
 	
 	// read a message from the stream coming in from the client
-	public String receive() throws IOException
+	public String receive()
 	{
 		String receivedMessage = "";
-		receivedMessage = in.readLine();
+		
+		try {
+			receivedMessage = in.readLine();
+		} 
+		catch (IOException e) {
+			System.err.println("Receive failed! " + e.getMessage());
+		}
+		
 		return receivedMessage;
 	}
-	 
+	
+     
     public void run() 
     {
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
            
-            send("Enter your username.");
-            username = receive();
-            
-            while(true){
-            	if(receivedMessage == null){
-	            	try{
-	            		receivedMessage = receive();
-	            	} catch(IOException e){
-	            		e.printStackTrace();
-	            		break;
-	            	}
-            	}
-            }
             // afterwards, close the socket
             socket.close();
         }
@@ -61,12 +53,5 @@ public class ClientConnection implements Runnable
             e.printStackTrace();
         }
     }
-    
-    public String getReceivedMessage(){
-    	return this.receivedMessage;
-    }
-    
-    public void resetMessage(){
-    	receivedMessage = null;
-    }
+
 }

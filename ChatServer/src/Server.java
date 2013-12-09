@@ -3,13 +3,11 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class Server 
 {
 	private ServerSocket serverSocket  = null;
 	private Socket 	connectionToClient = null;
-	private ArrayList<ClientConnection> clients = new ArrayList<ClientConnection>();
 
 	// init the listening server socket on the port specified
 	public void initiate(int port) throws IOException
@@ -20,52 +18,18 @@ public class Server
 	}
 	
 	// loop forever, accepting connections and starting those in new threads
-	
-	
 	public void waitForConnections() throws IOException
-	{
-		new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-				while (true)
-				{
-					log("Waiting for connections...");
-					try {
-						connectionToClient = serverSocket.accept();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					ClientConnection tempClient = new ClientConnection(connectionToClient);
-					clients.add(tempClient);
-					Thread newThread = new Thread(tempClient);
-					
-					newThread.start();
-					
-					log("Connection to client established.");
-					log("New thread: " + newThread.getName());
-				}
-			}
+	{		
+		while (true)
+		{
+			log("Waiting for connections...");
+			connectionToClient = serverSocket.accept();
+			Thread newThread = new Thread(new ServerConnection(connectionToClient));
 			
-		});
-	}
-	
-	private void waitForInput() {
-		while(true){
-			for(ClientConnection c : clients){
-				if(c.getReceivedMessage() != null){
-					sendMessageToClients(c.username + ": " + c.getReceivedMessage());
-					c.resetMessage();
-				}
-			}
-		}
-	}
-	
-	private void sendMessageToClients(String message){
-		for(ClientConnection c: clients){
-			c.send(message);
+			newThread.start();
+			
+			log("Connection to client established.");
+			log("New thread: " + newThread.getName());
 		}
 	}
 	
@@ -109,9 +73,6 @@ public class Server
 			System.exit(1);
 		}
 		
-		server.waitForInput();
-		
 		server.close();
-	
 	}
 }
