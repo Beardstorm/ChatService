@@ -13,8 +13,8 @@ public class Subject
 		this.observer = observer;
 	}
 	
-	public void notifyObservers() 
+	public void notifyObservers(String receivedMessage) 
 	{
-		observer.update();
+		observer.update(receivedMessage);
 	}
 }

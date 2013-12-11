@@ -166,7 +166,7 @@ public class GUI extends JFrame implements Observer
 	}
 
 	@Override
-	public void update() 
+	public void update(String message) 
 	{
 		
 	}

@@ -44,8 +44,7 @@ public class Client extends Subject
 			connectionToServer.close();
 		} 
 		catch (IOException e) {
-			logError("Failed to properly close the connection. "
-					+ e.getMessage());
+			logError("Failed to properly close the connection. " + e.getMessage());
 		}
 
 		log("Connection closed.");
@@ -76,8 +75,8 @@ public class Client extends Subject
 					
 					try {
 						receivedMessage = inStream.readLine();
-						log("Message received: "+receivedMessage);
-						notifyObservers();
+						log("Message received: " + receivedMessage);
+						notifyObservers(receivedMessage);
 					} 
 					catch (IOException e) {
 						logError("Receive failed! " + e.getMessage());
