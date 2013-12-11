@@ -1,5 +1,3 @@
-package Nackademin;
-
 import java.io.IOException;
 
 public class StartClass {

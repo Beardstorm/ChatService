@@ -5,13 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server 
+public class Server
 {
 	private ServerSocket serverSocket  = null;
 	private Socket 	connectionToClient = null;
 	private ArrayList<ClientConnection> clients = new ArrayList<ClientConnection>();
 
-	// init the listening server socket on the port specified
 	public void initiate(int port) throws IOException
 	{
 		log("Setting up server socket...");
@@ -19,43 +18,42 @@ public class Server
 		log("Server socket setup complete.");
 	}
 	
-	// loop forever, accepting connections and starting those in new threads
-	
-	
 	public void waitForConnections() throws IOException
 	{
 		new Thread(new Runnable(){
-
 			@Override
 			public void run() {
 				while (true)
 				{
 					log("Waiting for connections...");
+					
 					try {
 						connectionToClient = serverSocket.accept();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} 
+					catch (IOException e) {
+						logError("IOException caught while trying to connect to client.");
 					}
 					
 					ClientConnection tempClient = new ClientConnection(connectionToClient);
 					clients.add(tempClient);
 					Thread newThread = new Thread(tempClient);
-					
 					newThread.start();
 					
 					log("Connection to client established.");
 					log("New thread: " + newThread.getName());
 				}
 			}
-			
 		});
 	}
 	
-	private void waitForInput() {
-		while(true){
-			for(ClientConnection c : clients){
-				if(c.getReceivedMessage() != null){
+	private void waitForInput()
+	{
+		while(true)
+		{
+			for(ClientConnection c : clients)
+			{
+				if(c.getReceivedMessage() != null)
+				{
 					sendMessageToClients(c.username + ": " + c.getReceivedMessage());
 					c.resetMessage();
 				}
@@ -63,18 +61,21 @@ public class Server
 		}
 	}
 	
-	private void sendMessageToClients(String message){
-		for(ClientConnection c: clients){
+	private void sendMessageToClients(String message)
+	{
+		for(ClientConnection c: clients)
+		{
 			c.send(message);
 		}
 	}
 	
-	// close the server side
-	public void close(){
+	public void close()
+	{
 		log("Closing connection.");
 		try{
 			serverSocket.close();
-		}catch(IOException e){
+		}
+		catch(IOException e){
 			logError("Failed to properly close the connection. " + e.getMessage());
 		}	
 		log("Connection closed.");
@@ -110,8 +111,6 @@ public class Server
 		}
 		
 		server.waitForInput();
-		
 		server.close();
-	
 	}
 }

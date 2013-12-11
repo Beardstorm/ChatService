@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,26 +10,22 @@ public class ClientConnection implements Runnable
 	private PrintWriter out;
 	private BufferedReader in;
 	public String username;
-	public boolean hasNewMessage = false;
 	private String receivedMessage;
 	 
-	// create with a socket
-    public ClientConnection(Socket socket){
+    public ClientConnection(Socket socket)
+    {
         this.socket = socket;
     }
     
-    // write message to the stream going to the client
-	public void send(String message){
+	public void send(String message)
+	{
 		out.println(message);
 		out.flush();
 	}
 	
-	// read a message from the stream coming in from the client
 	public String receive() throws IOException
 	{
-		String receivedMessage = "";
-		receivedMessage = in.readLine();
-		return receivedMessage;
+		return in.readLine();
 	}
 	 
     public void run() 
@@ -43,29 +37,53 @@ public class ClientConnection implements Runnable
             send("Enter your username.");
             username = receive();
             
-            while(true){
-            	if(receivedMessage == null){
+            while(true)
+            {
+            	if(receivedMessage == null)
+            	{
 	            	try{
 	            		receivedMessage = receive();
 	            	} catch(IOException e){
-	            		e.printStackTrace();
+	            		logError("IOException caught while receiving input");
 	            		break;
 	            	}
             	}
+            	else
+            	{
+            		try{
+            			this.wait();
+            		}
+            		catch (InterruptedException e) {
+            			logError("InterruptedException caught while waiting");
+					}
+            	}
             }
-            // afterwards, close the socket
+            
+            // After receiving an IOException, the socket is closed
             socket.close();
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (IOException e) 
+        {
+        	logError("IOException caught while receiving input");
         }
     }
     
-    public String getReceivedMessage(){
+    public String getReceivedMessage()
+    {
     	return this.receivedMessage;
     }
     
-    public void resetMessage(){
+    public void resetMessage()
+    {
     	receivedMessage = null;
+    	this.notify(); // Notifys this waiting thread
     }
+ 
+//	private void log(String message){
+//		System.out.println("Server: " + message);
+//	}
+
+	private void logError(String message){
+		System.err.println("Server: " + message);
+	}    
 }
