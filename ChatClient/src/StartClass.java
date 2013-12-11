@@ -7,7 +7,7 @@ public class StartClass {
 		PropHandling propHandler = new PropHandling();
 		propHandler.readProperties("config.properties");
 
-		Client client = new Client(); // Creates a new instance of Client which is called client
+		Client client = new Client(); // Creates a new instance of Client called client
 		GUI gui = new GUI(client); // New instance of GUI which uses client as a reference
 		gui.setVisible(true); // Activates the GUI and makes it visible
 		

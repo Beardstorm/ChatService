@@ -15,7 +15,7 @@ public class Client extends Subject
 	{
 		log("Connecting to the most amazing server ever being made...");
 
-		// Creats a Socket och makes it connect to the server
+		// Creates a Socket and makes it connect to the server
 		connectionToServer = new Socket(serverAddress, serverPort);
 
 		outStream = new PrintWriter(new OutputStreamWriter(
