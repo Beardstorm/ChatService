@@ -2,13 +2,11 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.SystemColor;
-import java.awt.EventQueue;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
@@ -22,24 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-public class GUI extends JFrame {
-
-	  /*public static void main(String[] args) {
-		  EventQueue.invokeLater(new Runnable()
-		  	{ 
-			  public void run() {
-				  try {
-					  GUI frame = new GUI();
-					  frame.setVisible(true);
-				  } catch (Exception e) {
-					  e.printStackTrace();
-				  }
-			  }
-		});
-	  }*/
-	 
-	 
-
+public class GUI extends JFrame implements Observer
+{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtInputMessage;
@@ -54,10 +36,9 @@ public class GUI extends JFrame {
 	private JList<String> list;
 	private TextArea textArea;
 	private JPanel panel;
-	private Client client;
 
-	public GUI(Client client) {
-		this.client = client;
+	public GUI() 
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 450, 260);
@@ -184,4 +165,9 @@ public class GUI extends JFrame {
 		});
 	}
 
+	@Override
+	public void update() 
+	{
+		
+	}
 }

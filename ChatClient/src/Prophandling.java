@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Prophandling {
+public class PropHandling {
 
 	private Properties prop;
 
@@ -28,18 +28,8 @@ public class Prophandling {
 		}
 	}
 
-	private void printProperty(String propName) {
-		System.out.println(prop.getProperty(propName));
+	public String getProperty(String propName) 
+	{
+		return prop.getProperty(propName);
 	}
-
-	public static void main(String[] args) {
-
-		Prophandling pw = new Prophandling();
-		Prophandling pr = new Prophandling();
-		pw.writerProperties("config.properties");
-		pr.readProperties("config.properties");
-		pr.printProperty("port");
-		pr.printProperty("computerName");
-	}
-
 }

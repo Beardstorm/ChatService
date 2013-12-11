@@ -22,7 +22,8 @@ public class Server
 	{
 		new Thread(new Runnable(){
 			@Override
-			public void run() {
+			public void run() 
+			{
 				while (true)
 				{
 					log("Waiting for connections...");
@@ -36,6 +37,7 @@ public class Server
 					
 					ClientConnection tempClient = new ClientConnection(connectionToClient);
 					clients.add(tempClient);
+					
 					Thread newThread = new Thread(tempClient);
 					newThread.start();
 					
@@ -43,7 +45,9 @@ public class Server
 					log("New thread: " + newThread.getName());
 				}
 			}
-		});
+			
+			
+		}).start();
 	}
 	
 	private void waitForInput()
