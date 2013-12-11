@@ -15,10 +15,9 @@ public class Client extends Subject
 	{
 		log("Connecting to the most amazing server ever being made...");
 
-		// Set up a socket and connect it to our server
+		// Skapar en Socket och ansluter den till servern
 		connectionToServer = new Socket(serverAddress, serverPort);
 
-		// The getOutputStream and getInputStream methods return byte streams
 		outStream = new PrintWriter(new OutputStreamWriter(
 				connectionToServer.getOutputStream()));
 		inStream = new BufferedReader(new InputStreamReader(
@@ -27,7 +26,7 @@ public class Client extends Subject
 		log("Connected!");
 	}
 
-	// close the streams and the socket
+	// Stänger ner anslutningen till servern
 	public void close() 
 	{
 		log("Closing connection.");
@@ -43,7 +42,7 @@ public class Client extends Subject
 		log("Connection closed.");
 	}
 
-	// write a message to the stream going to the server
+	// Skriver meddelande som skickas till servern
 	public void send(String message) 
 	{
 		log("Sending...");
@@ -52,7 +51,7 @@ public class Client extends Subject
 		log("Message sent.");
 	}
 
-	// read a message from the stream coming from the server
+	// Läser meddelande som skickas från servern och anropar notifyObservers för att uppdatera
 	
 	public void receive() {
 		
@@ -69,7 +68,7 @@ public class Client extends Subject
 					try {
 						receivedMessage = inStream.readLine();
 						log("Message received: " + receivedMessage);
-						notifyObservers(receivedMessage);
+						notifyObservers(receivedMessage); // Uppdaterar Observer med en referens till receivedMessage
 					} 
 					catch (IOException e) {
 						logError("Receive failed! " + e.getMessage());
