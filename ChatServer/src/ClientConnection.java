@@ -60,6 +60,9 @@ public class ClientConnection extends Subject implements Runnable
         {
         	logError("IOException caught while receiving input");
         }
+        
+        receivedMessage = "<"+username+"> has disconnected";
+        notifyObservers();
     }
     
     public String getReceivedMessage()
