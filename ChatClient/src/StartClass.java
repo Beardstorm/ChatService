@@ -6,8 +6,10 @@ public class StartClass {
 
 		PropHandling propHandler = new PropHandling();
 		propHandler.readProperties("config.properties");
-		GUI gui = new GUI();
-		Client client = new Client(gui);
+
+		Client client = new Client();
+		GUI gui = new GUI(client);
+		
 		gui.setVisible(true);
 		
 		try {

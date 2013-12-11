@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server
+public class Server implements Observer
 {
 	private ServerSocket serverSocket  = null;
 	private Socket 	connectionToClient = null;
@@ -20,47 +20,37 @@ public class Server
 	
 	public void waitForConnections() throws IOException
 	{
-		new Thread(new Runnable(){
-			@Override
-			public void run() 
-			{
-				while (true)
-				{
-					log("Waiting for connections...");
-					
-					try {
-						connectionToClient = serverSocket.accept();
-					} 
-					catch (IOException e) {
-						logError("IOException caught while trying to connect to client.");
-					}
-					
-					ClientConnection tempClient = new ClientConnection(connectionToClient);
-					clients.add(tempClient);
-					
-					Thread newThread = new Thread(tempClient);
-					newThread.start();
-					
-					log("Connection to client established.");
-					log("New thread: " + newThread.getName());
-				}
+		while (true)
+		{
+			log("Waiting for connections...");
+			
+			try {
+				connectionToClient = serverSocket.accept();
+			} 
+			catch (IOException e) {
+				logError("IOException caught while trying to connect to client.");
 			}
 			
+			ClientConnection tempClient = new ClientConnection(connectionToClient);
+			tempClient.setObserver(this);
+			clients.add(tempClient);
 			
-		}).start();
+			Thread newThread = new Thread(tempClient);
+			newThread.start();
+			
+			log("Connection to client established.");
+			log("New thread: " + newThread.getName());
+		}
 	}
 	
-	private void waitForInput()
+	public void update()
 	{
-		while(true)
+		for(ClientConnection c : clients)
 		{
-			for(ClientConnection c : clients)
+			if(c.getReceivedMessage() != null)
 			{
-				if(c.getReceivedMessage() != null)
-				{
-					sendMessageToClients(c.username + ": " + c.getReceivedMessage());
-					c.resetMessage();
-				}
+				sendMessageToClients(c.username + ": " + c.getReceivedMessage());
+				c.resetMessage();
 			}
 		}
 	}
@@ -114,7 +104,6 @@ public class Server
 			System.exit(1);
 		}
 		
-		server.waitForInput();
 		server.close();
 	}
 }

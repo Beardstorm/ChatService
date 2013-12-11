@@ -26,7 +26,6 @@ public class GUI extends JFrame implements Observer
 	private JPanel contentPane;
 	private JTextField txtInputMessage;
 	private JPanel inputPanel;
-	private JButton btnConnect;
 
 	// GET USERS CONNECTED!!!
 	private int[] users = { 0, 1, 2, 3, 4, 5, 6, 7 };
@@ -36,9 +35,13 @@ public class GUI extends JFrame implements Observer
 	private JList<String> list;
 	private TextArea textArea;
 	private JPanel panel;
+	private Client client;
 
-	public GUI() 
+	public GUI(Client client) 
 	{
+		this.client = client;
+		client.setObserver(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 450, 260);
@@ -102,43 +105,18 @@ public class GUI extends JFrame implements Observer
 		final JButton btnSend = new JButton("Send");
 		inputPanel.add(btnSend);
 
-		txtInputMessage.setEnabled(false);
+		txtInputMessage.setEnabled(true);
 		txtInputMessage.setText("");
-		btnSend.setEnabled(false);
-
-		btnConnect = new JButton("Connect");
-		inputPanel.add(btnConnect);
-		btnConnect.setMinimumSize(new Dimension(170, 29));
-		btnConnect.setMaximumSize(new Dimension(170, 29));
-		btnConnect.setPreferredSize(new Dimension(170, 29));
-		btnConnect.setEnabled(true);
-		btnConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (btnConnect.getText() == "Connect") {
-					btnConnect.setText("Disconnect");
-					txtInputMessage.setEnabled(true);
-					btnSend.setEnabled(true);
-				} else {
-					textArea.setText("");
-					textArea.repaint();
-					btnConnect.setText("Connect");
-
-					txtInputMessage.setEnabled(false);
-					btnSend.setEnabled(false);
-				}
-			}
-		});
+		btnSend.setEnabled(true);
 		
 		// Add actions to button
-		
 		txtInputMessage.addKeyListener(
 		            new KeyListener(){
 		                public void keyPressed(KeyEvent e){
 		                    if(e.getKeyCode() == KeyEvent.VK_ENTER){
-		                		String input = txtInputMessage.getText().toString();
-		                		
-		    					//textArea.append(input + System.lineSeparator());
+		                		String message = txtInputMessage.getText().toString();
 		    					txtInputMessage.setText(""); 
+		    					sendMessage(message);
 		                    }       
 		                }
 						@Override
@@ -158,16 +136,22 @@ public class GUI extends JFrame implements Observer
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					String message = txtInputMessage.getText().toString();
-					textArea.append(message + System.lineSeparator());
 					txtInputMessage.setText("");
+					sendMessage(message);
 				}
 			}
 		});
 	}
-
+	
+	public void sendMessage(String message)
+	{
+		client.send(message);
+	}
+	
 	@Override
 	public void update(String message) 
 	{
-		
+		textArea.append(message + System.lineSeparator());
+		textArea.revalidate();
 	}
 }

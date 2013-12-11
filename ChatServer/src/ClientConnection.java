@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientConnection implements Runnable
+public class ClientConnection extends Subject implements Runnable
 {
 	private Socket socket = null;
 	private PrintWriter out;
@@ -43,19 +43,11 @@ public class ClientConnection implements Runnable
             	{
 	            	try{
 	            		receivedMessage = receive();
+	            		notifyObservers();
 	            	} catch(IOException e){
 	            		logError("IOException caught while receiving input");
 	            		break;
 	            	}
-            	}
-            	else
-            	{
-            		try{
-            			this.wait();
-            		}
-            		catch (InterruptedException e) {
-            			logError("InterruptedException caught while waiting");
-					}
             	}
             }
             
@@ -76,7 +68,6 @@ public class ClientConnection implements Runnable
     public void resetMessage()
     {
     	receivedMessage = null;
-    	this.notify(); // Notifys this waiting thread
     }
  
 //	private void log(String message){

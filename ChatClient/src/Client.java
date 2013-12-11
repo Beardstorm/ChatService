@@ -12,9 +12,8 @@ public class Client extends Subject
 	private PrintWriter outStream = null;
 	private BufferedReader inStream = null;
 	
-	public Client(Observer observer) 
+	public Client() 
 	{
-		setObserver(observer);
 	}
 
 	// set up a connection to a specified server and port
