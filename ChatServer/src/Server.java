@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,9 +16,10 @@ public class Server implements Observer
 		log("Server socket setup complete.");
 	}
 	
+	
 	public void waitForConnections() throws IOException
 	{
-		while (true)
+		while(true)
 		{
 			log("Waiting for connections...");
 			
@@ -31,10 +30,16 @@ public class Server implements Observer
 				logError("IOException caught while trying to connect to client.");
 			}
 			
+			// Creates a client connection
 			ClientConnection tempClient = new ClientConnection(connectionToClient);
+			
+			// Adds Server as the Observer for that connection
 			tempClient.setObserver(this);
+			
+			// Adds it to the clients list
 			clients.add(tempClient);
 			
+			// And starts its thread
 			Thread newThread = new Thread(tempClient);
 			newThread.start();
 			
@@ -45,11 +50,16 @@ public class Server implements Observer
 	
 	public void update()
 	{
+		// Iterates through all the connections
 		for(ClientConnection c : clients)
 		{
+			// Find the one message that is not null
 			if(c.getReceivedMessage() != null)
 			{
+				// And sends it to all the clients
 				sendMessageToClients(c.getReceivedMessage());
+				
+				// Sets the message to null so that it's not sent again until it's updated
 				c.resetMessage();
 			}
 		}

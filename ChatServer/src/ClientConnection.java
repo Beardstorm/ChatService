@@ -19,37 +19,40 @@ public class ClientConnection extends Subject implements Runnable
     
 	public void send(String message)
 	{
+		// Prints the message on the PrintWriter and flushes it
 		out.println(message);
 		out.flush();
 	}
 	
 	public String receive() throws IOException
 	{
+		// Awaits input
 		return in.readLine();
 	}
 	 
     public void run() 
     {
         try {
+        	// Initiates the IO handlers
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
            
             send("Enter your username.");
             username = receive();
+            
+            // Sets the message that the server gets when notified about it
             receivedMessage = "<"+username+"> has connected";
-            notifyObservers();
+            notifyObserver();
             
             while(true)
             {
-            	if(receivedMessage == null)
-            	{
-	            	try{
-	            		receivedMessage = username + ": " + receive();
-	            		notifyObservers();
-	            	} catch(IOException e){
-	            		logError("IOException caught while receiving input");
-	            		break;
-	            	}
+            	try{
+            		// Receives input and creates the output message the server sends to all the clients
+            		receivedMessage = username + ": " + receive();
+            		notifyObserver();
+            	} catch(IOException e){
+            		logError("IOException caught while receiving input");
+            		break;
             	}
             }
             
@@ -62,7 +65,7 @@ public class ClientConnection extends Subject implements Runnable
         }
         
         receivedMessage = "<"+username+"> has disconnected";
-        notifyObservers();
+        notifyObserver();
     }
     
     public String getReceivedMessage()

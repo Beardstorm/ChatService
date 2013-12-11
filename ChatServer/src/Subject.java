@@ -1,6 +1,8 @@
 
 public class Subject 
 {
+	// Standard observer design pattern 
+	
 	protected Observer observer;
 
 	public Observer getObserver() 
@@ -13,7 +15,7 @@ public class Subject
 		this.observer = observer;
 	}
 	
-	public void notifyObservers() 
+	public void notifyObserver() 
 	{
 		observer.update();
 	}
