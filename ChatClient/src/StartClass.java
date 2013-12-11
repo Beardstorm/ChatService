@@ -9,11 +9,10 @@ public class StartClass {
 
 		Client client = new Client();
 		GUI gui = new GUI(client);
-		
 		gui.setVisible(true);
 		
 		try {
-			client.connect(propHandler.getProperty("IP_address"), Integer.parseInt(propHandler.getProperty("port"))); // Hårdkodat för tillfället :)
+			client.connect(propHandler.getProperty("address"), Integer.parseInt(propHandler.getProperty("port"))); // Hårdkodat för tillfället :)
 		} 
 		catch (IOException e) {
 			System.err.println("Failed to connect to the server. " + e.getMessage());

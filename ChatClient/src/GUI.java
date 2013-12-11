@@ -1,24 +1,18 @@
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.SystemColor;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 public class GUI extends JFrame implements Observer
 {
@@ -26,13 +20,6 @@ public class GUI extends JFrame implements Observer
 	private JPanel contentPane;
 	private JTextField txtInputMessage;
 	private JPanel inputPanel;
-
-	// GET USERS CONNECTED!!!
-	private int[] users = { 0, 1, 2, 3, 4, 5, 6, 7 };
-
-	static Random random = new Random(2);
-	private String randomUser = "User" + random.nextInt(122 - 65);
-	private JList<String> list;
 	private TextArea textArea;
 	private JPanel panel;
 	private Client client;
@@ -56,24 +43,7 @@ public class GUI extends JFrame implements Observer
 		incomingPanel.setMinimumSize(new Dimension(10, 200));
 		contentPane.add(incomingPanel);
 		incomingPanel.setLayout(new BoxLayout(incomingPanel, BoxLayout.X_AXIS));
-
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		for (int i = 0; i < users.length; i++) {
-			listModel.addElement(randomUser);
-		}
-
-		list = new JList<String>(listModel);
-		list.setForeground(Color.BLACK);
-		list.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.GRAY));
-		list.setVisibleRowCount(10);
-		list.setSelectedIndex(-1);
-		list.setLayout(new BoxLayout(list, BoxLayout.Y_AXIS));
-		list.setBackground(SystemColor.window);
-		list.setMinimumSize(new Dimension(100, 199));
-		list.setPreferredSize(new Dimension(100, 199));
-		list.setMaximumSize(new Dimension(100, 199));
-		incomingPanel.add(list);
-
+		
 		panel = new JPanel();
 		panel.setBorder(null);
 		panel.setOpaque(false);

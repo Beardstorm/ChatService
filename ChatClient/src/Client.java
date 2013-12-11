@@ -7,16 +7,10 @@ import java.net.Socket;
 
 public class Client extends Subject
 {
-
 	private Socket connectionToServer = null;
 	private PrintWriter outStream = null;
 	private BufferedReader inStream = null;
-	
-	public Client() 
-	{
-	}
 
-	// set up a connection to a specified server and port
 	public void connect(String serverAddress, int serverPort) throws IOException 
 	{
 		log("Connecting to the most amazing server ever being made...");

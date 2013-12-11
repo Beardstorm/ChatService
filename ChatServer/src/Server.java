@@ -49,7 +49,7 @@ public class Server implements Observer
 		{
 			if(c.getReceivedMessage() != null)
 			{
-				sendMessageToClients(c.username + ": " + c.getReceivedMessage());
+				sendMessageToClients(c.getReceivedMessage());
 				c.resetMessage();
 			}
 		}

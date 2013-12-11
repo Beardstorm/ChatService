@@ -36,13 +36,15 @@ public class ClientConnection extends Subject implements Runnable
            
             send("Enter your username.");
             username = receive();
+            receivedMessage = "<"+username+"> has connected";
+            notifyObservers();
             
             while(true)
             {
             	if(receivedMessage == null)
             	{
 	            	try{
-	            		receivedMessage = receive();
+	            		receivedMessage = username + ": " + receive();
 	            		notifyObservers();
 	            	} catch(IOException e){
 	            		logError("IOException caught while receiving input");
