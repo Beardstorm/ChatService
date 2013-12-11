@@ -61,6 +61,7 @@ public class Server implements Observer
 				
 				// Sets the message to null so that it's not sent again until it's updated
 				c.resetMessage();
+				break;
 			}
 		}
 	}
