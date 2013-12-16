@@ -47,8 +47,6 @@ public class GUI extends JFrame implements Observer
 		incomingPanel.setLayout(new BoxLayout(incomingPanel, BoxLayout.X_AXIS));
 		contentPane.add(incomingPanel);
 	
-		// add the text-area-panel to parent panel. 
-		incomingPanel.add(panel);
 		// not sure what the f this sh was doin
 //		incomingPanel.add(panel);
 
