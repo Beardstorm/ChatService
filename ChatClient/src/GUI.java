@@ -39,14 +39,6 @@ public class GUI extends JFrame implements Observer
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		setContentPane(contentPane);
 
-		// Set a panel holding panels
-		panel = new JPanel();
-		panel.setBorder(null);
-		panel.setOpaque(false);
-		panel.setPreferredSize(new Dimension(5, 200));
-		panel.setMinimumSize(new Dimension(5, 200));
-		panel.setMaximumSize(new Dimension(5, 200));
-		
 		// Set panel which holds the text area for messages
 		JPanel incomingPanel = new JPanel();
 		incomingPanel.setMaximumSize(new Dimension(450, 200));
